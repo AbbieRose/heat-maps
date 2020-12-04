@@ -46,8 +46,6 @@ jupyter-client==5.2.3
 jupyter-console==5.2.0
 jupyter-core==4.4.0
 kiwisolver==1.1.0
-# Editable install with no version control (librec-auto==0.1.2)
--e /usr/local/lib/python3.6/site-packages
 lxml==4.5.0
 lyricsgenius==1.8.2
 MarkupSafe==1.0
