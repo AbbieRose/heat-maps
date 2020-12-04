@@ -1,5 +1,4 @@
 amply==0.1.2
-AnalyticsHandbook==0.2.dev0
 appnope==0.1.0
 backcall==0.1.0
 beautifulsoup4==4.6.0
