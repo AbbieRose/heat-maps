@@ -1,0 +1,50 @@
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
+import plotly.graph_objs as go
+import plotly.express as px
+from flask import Flask
+
+import pandas as pd
+import numpy as np
+
+server = Flask(__name__)
+app = dash.Dash(__name__, server=server)
+
+file = "data/7542.json"
+
+data = pd.read_json(file)
+event_columns = ["player","type","timestamp","location"]
+meta_columns = ["player","team"]
+
+metadata = data[meta_columns]
+
+events = (data[data.location.notnull()])[event_columns]
+
+events["player"] = pd.DataFrame(events["player"].to_list())["name"]
+events["type"] = pd.DataFrame(events["type"].to_list())["name"]
+
+events["loc_x"] = pd.DataFrame(events["location"].to_list())[0]
+events["loc_y"] = pd.DataFrame(events["location"].to_list())[1]
+
+events = (events[events.player.notnull()])
+
+player = "Mbark Boussoufa"
+
+player_events = events[events["player"] == player]
+
+player_events["location"].to_list()
+
+# player picker, file picker
+# then the next thing I want is a bucket adjustor
+# and a smoother
+fig = px.density_heatmap(player_events, x="loc_x", y="loc_y", nbinsx=60, nbinsy=40, color_continuous_scale="Viridis")
+
+fig.show()
+
+app.layout = html.Div(children=[
+    dcc.Graph(figure=fig)
+])
+
+if __name__ == '__main__' :
+    app.run_server()
